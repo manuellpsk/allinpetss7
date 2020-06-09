@@ -3,15 +3,15 @@
         <div class="container">
             <div class="card">
                 <div class="card card-head">
-                    <h3>Nueva Publicación</h3>
+                    <h3>Editar Publicación</h3>
                 </div>
                 <div class="card-body">
-                    <form action="/profile/add" method="POST">
+                    <form action="/profile/pedit/{{publicaciones.idPublicaciones}}" method="POST">
                         <div class="form-group">
-                            <textarea name="descripcion" rows="4" class="form-control" placeholder="Descripción" style="resize: none;"></textarea>
+                            <textarea name="descripcion" rows="4" class="form-control" placeholder="Descripción" style="resize: none;">{{publicaciones.descripcion}}</textarea>
                         </div>
                         <button class="text-right form-group btn btn-primary">
-                            Publicar
+                            Editar
                         </button>
                     </form>
                 </div>

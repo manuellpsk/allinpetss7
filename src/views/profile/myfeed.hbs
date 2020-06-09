@@ -13,6 +13,17 @@
                             {{descripcion}}
                         </h4>
                     </div>
+                    <div class="card-footer text-right">
+                        <a href="/profile/delete/{{idPublicaciones}}" class="btn btn-danger">Eliminar</a>
+                        <a href="/profile/pedit/{{idPublicaciones}}" class="btn btn-success">Modificar</a>
+                    </div>
+                </div>
+            </div>
+        {{else}}
+            <div class="col-md-4 mx-auto">
+                <div class="card card-body text-center">
+                    <p>Aún no tienes publicaciones.</p>
+                    <a href="/profile/add" class="btn btn-primary">Empezar a publicar</a>
                 </div>
             </div>
         {{/each}}

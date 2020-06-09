@@ -12,6 +12,17 @@
   </head>
   <body>
       {{> navigation}}
+      {{> messages}}
+
+      <div class="container py-4">
+        <div class="card">
+          <div class="card-head">
+            <a href="/profile/add" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Publicar</a>
+            <a href="/profile" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Mis Publicaciones</a>
+          </div>
+        </div>
+      </div>
+
       {{{body}}}
 
     <!-- Optional JavaScript -->
