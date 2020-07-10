@@ -16,8 +16,10 @@ pool.getConnection((err, connection)=>{
             console.log('CONEXION PERDIDA');
         }    
     }
-    if(connection)connection.release();
-    console.log('DB esta conectada');
+    if(connection){
+        connection.release();
+        console.log('DB esta conectada');
+    }
     return;
 });
 

@@ -1,3 +1,4 @@
+{{#if user}}
 <div class="container p-4">
     <div class="row">
         <div class="container">
@@ -6,7 +7,7 @@
                     <h3>Nueva Publicación</h3>
                 </div>
                 <div class="card-body">
-                    <form action="/profile/add" method="POST">
+                    <form action="/perfil/publicar" method="POST">
                         <div class="form-group">
                             <textarea name="descripcion" rows="4" class="form-control" placeholder="Descripción" style="resize: none;"></textarea>
                         </div>
@@ -22,3 +23,6 @@
         </div>
     </div>
 </div>
+{{else}}
+Debe registrarse...
+{{/if}}

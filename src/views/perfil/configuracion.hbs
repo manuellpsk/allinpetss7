@@ -1,0 +1,58 @@
+{{#if user}}
+<div class="container my-2">
+    <div class="card border-warning mb-3 mx-auto" style="max-width: 18rem;">
+        <div class="card-header">¡Atención!</div>
+        <div class="card-body text-warning">
+            <h5 class="card-title">Ten en cuenta lo siguiente para modificar.</h5>
+            <p class="card-text">El nuevo nombre debe tener mínimo 2 letras.</p>
+            <p class="card-text">La contraseña de mínimo 6 caracteres.</p>
+            <p class="card-text">La descripción de mínimo 1 caracter.</p>
+        </div>
+    </div>
+</div>
+<div class="container my-2">
+    <div class="card">
+        <div class="card-header">
+            <h3>Modificar Datos de Usuarios</h3>
+        </div>
+        <div class="card-body">
+            <form action="/perfil/configuracion" method="POST" onsubmit="return validarModificacion();"
+                name="formsignup">
+                <div class="form-group">
+                    <label for="idrut">Rut</label>
+                    <input type="text" class="form-control" id="rut" aria-describedby="rutHelp" value={{rut}} name='rut'
+                        readonly>
+                    <small id="rutHelp" class="form-text text-muted">Esta sección no se puede editar.</small>
+                </div>
+                <div class="form-group">
+                    <label for="idNombre">Nombre</label>
+                    <input type="text" class="form-control" id="nombre" placeholder="Nombre" name="nombre">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Nuevo email</label>
+                    <input type="email" class="form-control" id="email" aria-describedby="emailHelp"
+                        placeholder="Enter email" name="email">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Nueva Password</label>
+                    <input type="password" class="form-control" id="password" placeholder="Password" name="newpassword">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Confirm Nueva Password</label>
+                    <input type="password" class="form-control" id="password2" placeholder="Confirm-Password"
+                        name="newpassword2">
+                </div>
+                <div class="form-group">
+                    <label for="exampleBio">Bio</label>
+                    <textarea name="descripcion" rows="4" class="form-control" placeholder="Información para compartir"
+                        id="descripcion" style="resize: none;"></textarea>
+                </div>
+                <button type="submit" class="btn btn-success my-4" id="btnRegistrar">Modificar Datos</button>
+                <button type="submit" class="btn btn-danger my-4" id="btnRegistrar">Cancelar</button>
+            </form>
+        </div>
+    </div>
+</div>
+{{else}}
+Debe registrarse...
+{{/if}}
