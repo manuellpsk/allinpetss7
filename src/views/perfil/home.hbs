@@ -1,6 +1,6 @@
 {{#if user}}
-{{> menu}}
 <div class="container">
+  {{> menu}}
   <div class="h-100 row align-items-center">
     <div class="col">
       {{#if user}}
@@ -8,11 +8,13 @@
         {{#each publicaciones}}
         <div class="row">
           <div class="col-md-12 my-2">
-            <div class="card">
+            <div class="card border-info">
               <div class="card-header">
                 <ul class="nav nav-pills card-header-pills">
                   <li class="nav-item">
-                    <p>{{nombre}}</p>
+                    <a href="/perfil/suser/{{idUsuarios}}" class="badge badge-light">
+                      <p class="h6 text-capitalize">{{nombre}}</p>
+                    </a>
                   </li>
                   <li class="nav-item ml-auto">
                     <button data-toggle="modal" data-target="#loginModal" type="button"
@@ -21,9 +23,9 @@
                 </ul>
               </div>
               <div class="card-body">
-                <h4 class="text-centered">
+                <div class="text-break font-weight-bold">
                   {{descripcion}}
-                </h4>
+                </div>
               </div>
               <div class="card-footer text-right">
                 <ul class="nav nav-pills card-header-pills">
@@ -32,13 +34,13 @@
                       aria-pressed="true">Comentarios </a>
                   </li>
                   <li class="nav-item ml-auto">
-                    <p>{{timeago fecha}}</p>
+                    <p><small>{{timeago fecha}}</small></p>
                   </li>
                 </ul>
               </div>
             </div>
           </div>
-          <div class="modal fade " role="dialog" id="loginModal">
+          <div class="modal fade" role="dialog" id="loginModal">
             <div class="modal-dialog modal-dialog-centered">
               <div class="modal-content">
                 <div class="modal-header">

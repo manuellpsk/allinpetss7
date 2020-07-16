@@ -24,10 +24,8 @@ router.post('/signup', async (req, res) => {
     };
     newUser.rut = parseInt(rut.substring(0, rut.indexOf('-')));
     newUser.password = await helprs.encryptPassword(password);
-    console.log(newUser);
     try {
         const resul = await pool.query('INSERT INTO Usuarios set ?', [newUser]);
-        console.log(resul);
         if (resul.insertId) {
             res.redirect('/');
         } else {
@@ -58,14 +56,16 @@ router.get('/signin', (req, res) => {
 router.post('/signin', (req, res, next) => {
     passport.authenticate('local.singin', {
         successRedirect: './perfil/home',
-        failureRedirect: '#',
+        failureRedirect: '/',
         failureFlash: true
     })(req, res, next);
+    console.log(req.flash('message'));
 });
 
 router.get('/logout', (req, res) => {
     if (req.isAuthenticated()) {
         req.logOut();
+        req.flash('success','Usuario desconectado');
         res.redirect("/");
     } else {
         res.redirect('/signin');

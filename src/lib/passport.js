@@ -12,14 +12,18 @@ passport.use('local.singin', new LocalStrategy({
     const rows = await pool.query('SELECT * FROM Usuarios WHERE rut=?', [rutlogin]);
     if (rows.length > 0) {
         const user = rows[0];
-        const validPassword = await helprs.matchPassword(passwordlogin, user.password);
-        if (validPassword) {
-            done(null, user, req.flash('success', 'Bienvenido ' + user.nombre));
+        if (user.activo != 0) {
+            const validPassword = await helprs.matchPassword(passwordlogin, user.password);
+            if (validPassword) {
+                done(null, user, req.flash('success', 'Bienvenido ' + user.nombre));
+            } else {
+                done(null, false, req.flash('message', 'Credenciales Incorrectas'));
+            }
         } else {
             done(null, false, req.flash('message', 'Credenciales Incorrectas'));
         }
     } else {
-        return done(null, false, req.flash('message', 'No existe'));
+        return done(null, false, req.flash('message', 'Credenciales Incorrectas'));
     }
 }));
 

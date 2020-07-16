@@ -1,6 +1,8 @@
 {{#if user}}
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-  <a class="navbar-brand" href="../home">AllinPets</a>
+  <a class="navbar-brand" href="../home">
+    <div class="h4">AllinPets</div>
+  </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -19,6 +21,9 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="/perfil/configuracion">Configuración</a>
+          {{#when user.tipo 'eq' 2}}
+          <a class="dropdown-item" href="/perfil/denuncias">Administración</a>
+          {{/when}}
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="/logout">Cerrar Sesión</a>
         </div>
@@ -51,13 +56,15 @@
         <h3 class="modal-title">Login</h3>
         <button class="close" data-dismiss="modal">&times;</button>
       </div>
-      <form action="/signin" method="POST" onsubmit="return validarRutLogin();" name="formlogin">
+      <form action="/signin" method="POST" name="formlogin"
+        class="needs-validation" novalidate>
         <div class="modal-body">
           <div class="form-group">
-            <input type="text" name="rutlogin" class="form-control" placeholder="Rut" id="rutlogin">
+            <input type="text" name="rutlogin" class="form-control" placeholder="Rut" id="rutlogin" required>
           </div>
           <div class="form-group">
-            <input type="password" name="passwordlogin" class="form-control" placeholder="Contraseña" id="passwordlogin">
+            <input type="password" name="passwordlogin" class="form-control" placeholder="Contraseña"
+              id="passwordlogin" required>
           </div>
         </div>
         <div class="modal-footer">

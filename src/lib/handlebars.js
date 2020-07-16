@@ -1,11 +1,25 @@
-const {format}= require('timeago.js');
+const { format } = require('timeago.js');
 
-const helpers={}
+const helpers = {}
 
-helpers.timeago= (timestamp)=>{
-    const fec= new Date(timestamp);
-    return fec.toDateString()+'. '+format(timestamp);
+helpers.timeago = (timestamp) => {
+    const fec = new Date(timestamp);
+    return fec.toDateString() + '. ' + format(timestamp);
 };
 
+helpers.when = ("when", function (operand_1, operator, operand_2, options) {
+    const operators = {
+        'eq': function (l, r) { return l == r; },
+        'noteq': function (l, r) { return l != r; },
+        'gt': function (l, r) { return Number(l) > Number(r); },
+        'or': function (l, r) { return l || r; },
+        'and': function (l, r) { return l && r; },
+        '%': function (l, r) { return (l % r) === 0; }
+    }
+        , result = operators[operator](operand_1, operand_2);
 
-module.exports=helpers;
+    if (result) return options.fn(this);
+    else return options.inverse(this);
+});
+
+module.exports = helpers;

@@ -1,25 +1,20 @@
 {{#if user}}
-<div class="container p-4">
-    <div class="row">
-        <div class="container">
-            <div class="card">
-                <div class="card card-head">
-                    <h3>Nueva Publicación</h3>
+<div class="container mt-5">
+    <div class="card border-info my-auto">
+        <div class="card card-head p-1 ">
+            <h3>Nueva Publicación</h3>
+        </div>
+        <div class="card-body ">
+            <form action="/perfil/publicar" method="POST" id="formPublicar">
+                <div class="form-group">
+                    <textarea name="descripcion" rows="4" class="form-control border-info" id="txtPublicar"
+                        placeholder="Descripción" style="resize: none;" minlength="2" maxlength="255"
+                        required></textarea>
                 </div>
-                <div class="card-body">
-                    <form action="/perfil/publicar" method="POST">
-                        <div class="form-group">
-                            <textarea name="descripcion" rows="4" class="form-control" placeholder="Descripción" style="resize: none;"></textarea>
-                        </div>
-                        <button class="text-right form-group btn btn-primary">
-                            Publicar
-                        </button>
-                    </form>
-                </div>
-                <div class="card-footer text-right form-group">
-                    
-                </div>
-            </div>
+                <button class="text-right form-group btn btn-primary">
+                    Publicar
+                </button>
+            </form>
         </div>
     </div>
 </div>

@@ -1,34 +1,50 @@
-<div class="container my-2">
-    <div class="card">
+<div class="container mt-2">
+    <div class="card mx-auto" style="width: 50rem;">
         <div class="card-header">
             <h3>Registro</h3>
         </div>
         <div class="card-body">
-            <form action="/signup" method="POST" onsubmit="return validarRutRegistro();" name="formsignup">
+            <form action="/signup" method="POST" name="formsignup"
+                class="needs-validation" novalidate>
                 <div class="form-group">
                     <label for="idrut">Rut</label>
-                    <input type="text" class="form-control" id="rut" aria-describedby="rutHelp"
-                        placeholder="Rut" name='rutRegistro' autofocus>
+                    <input type="text" class="form-control" id="rut" aria-describedby="rutHelp" placeholder="Rut"
+                        name='rutRegistro' required>
                     <small id="rutHelp" class="form-text text-muted">Por ejemplo. 12345678-9</small>
                 </div>
                 <div class="form-group">
                     <label for="idNombre">Nombre</label>
-                    <input type="text" class="form-control" id="nombre" placeholder="Nombre" name="nombre">
+                    <input type="text" class="form-control" id="nombre" pattern="\w+\s{0,1}\w*\s{0,1}\w*\s{0,1}\w*s{0,1}\w*s{0,1}\w*s{0,1}\w*" placeholder="Nombre" name="nombre" required>
+                    <div class="invalid-feedback">
+                        Ingrese un nombre.
+                    </div>
                 </div>
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Email address</label>
+                    <label for="exampleInputEmail1">Email</label>
                     <input type="email" class="form-control" id="email" aria-describedby="emailHelp"
-                        placeholder="Enter email" name="email">
+                        placeholder="Enter email" name="email" required>
+                    <div class="invalid-feedback">
+                        Ingrese un email.
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="exampleInputPassword1">Password</label>
-                    <input type="password" class="form-control" id="password" placeholder="Password" name="passwordRegistro">
+                    <input type="password" class="form-control" id="password" placeholder="Password"
+                        name="passwordRegistro" required>
+                    <div class="invalid-feedback">
+                        Ingrese una contraseña.
+                    </div>
                 </div>
-                <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                    <label class="form-check-label" for="exampleCheck1">Aca deben ir las politcas...</label>
+                <div class="form-group">
+                    <p class="text-danger d-inline">(*)</p>
+                    <p class="d-inline"><small>Al hacer clic en Registrarse, acepta nuestros <a href="">Términos</a> ,
+                            <a href="">Política de datos</a>
+                            y
+                            <a href="">Política de cookies</a> . Puede
+                            optar por no
+                            participar en cualquier momento.</small></p>
                 </div>
-                <button type="submit" class="btn btn-primary my-4" id="btnRegistrar">Registrar</button>
+                <button type="submit" class="btn btn-primary mt-2" id="btnRegistrar">Registrarse</button>
             </form>
         </div>
     </div>

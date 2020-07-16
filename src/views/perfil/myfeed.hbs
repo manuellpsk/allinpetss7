@@ -4,27 +4,33 @@
     <div class="row">
         {{#each publicaciones}}
         <div class="col-md-12 my-2">
-            <div class="card">
+            <div class="card border-info">
                 <div class="card-header">
-                    <p>
-                        {{timeago fecha}}
-                    </p>
+                    <p><small>{{timeago fecha}}</small></p>
                 </div>
                 <div class="card-body">
-                    <h4 class="text-centered">
+                    <div class="text-break font-weight-bold">
                         {{descripcion}}
-                    </h4>
+                    </div>
                 </div>
                 <div class="card-footer text-right">
-                    <a href="/perfil/delete/{{idPublicaciones}}" class="btn btn-danger">Eliminar</a>
-                    <a href="/perfil/pedit/{{idPublicaciones}}" class="btn btn-success">Modificar</a>
+                    <ul class="nav nav-pills card-header-pills">
+                        <li class="nav-item">
+                            <a href="/perfil/comentario/{{idPublicaciones}}" class="btn btn-outline-info btn-sm"
+                                role="button" aria-pressed="true">Comentarios </a>
+                        </li>
+                        <li class="nav-item ml-auto">
+                            <a href="/perfil/delete/{{idPublicaciones}}" class="btn btn-danger btn-sm">Eliminar</a>
+                            <a href="/perfil/pedit/{{idPublicaciones}}" class="btn btn-success btn-sm">Modificar</a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
         {{else}}
-        <div class="col-md-4 mx-auto">
-            <div class="card card-body text-center">
-                <p>Aún no tienes publicaciones.</p>
+        <div class="col-md-4 mx-auto mt-5">
+            <div class="card card-body text-center border-info">
+                <p class="h6">Aún no tienes publicaciones</p>
                 <a href="/perfil/publicar" class="btn btn-primary">Empezar a publicar</a>
             </div>
         </div>

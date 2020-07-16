@@ -7,7 +7,7 @@ const session = require('express-session');
 const MysqlStore = require('express-mysql-session');
 const passport = require('passport');
 const { database } = require('./keys');
-const auth=require('./lib/auth');
+const auth = require('./lib/auth');
 
 //inicializacion
 const app = express();
@@ -39,10 +39,10 @@ app.use(express.json());
 app.use(passport.initialize());
 app.use(passport.session());
 
-//Variable globales solicitus, respuesta
+//Variable globales solicitudes, respuesta
 app.use((req, res, next) => {
-    app.locals.success = req.flash('success');
     app.locals.message = req.flash('message');
+    app.locals.success = req.flash('success');
     app.locals.user = req.user;
     next();
 });
