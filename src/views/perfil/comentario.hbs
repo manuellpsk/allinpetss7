@@ -12,10 +12,12 @@
                                     <li class="nav-item">
                                         <p class="h6">{{nombre}}</p>
                                     </li>
+                                    {{#when user.nombre 'eq' nombre}}
                                     <li class="nav-item ml-auto">
                                         <button data-toggle="modal" data-target="#loginModal" type="button"
                                             class="btn btn-warning btn-sm">Reportar</button>
                                     </li>
+                                    {{/when}}
                                 </ul>
                             </div>
                             <div class="card-body">
@@ -84,7 +86,7 @@
                 {{/each}}
                 <div class="row">
                     <div class="col-md-12 my-2">
-                        <form action="/perfil/comentario" method="POST">
+                        <form action="/perfil/comentario" method="POST" name="formComentario" class="needs-validation">
                             <input type="text" name="idPublicaciones" id="" value="{{idPublicaciones}}"
                                 hidden>
                             <div class="form-row align-items-center">
@@ -93,7 +95,7 @@
                                         placeholder="Escribe un comentario..." required>
                                 </div>
                                 <div class="col-auto my-1">
-                                    <button type="submit" class="btn btn-primary"><svg width="3em" height="1em"
+                                    <button type="submit" class="btn btn-primary" id="btnComentario" disabled><svg width="3em" height="1em"
                                             viewBox="0 0 16 16" class="bi bi-arrow-right-circle" fill="currentColor"
                                             xmlns="http://www.w3.org/2000/svg">
                                             <path fill-rule="evenodd"

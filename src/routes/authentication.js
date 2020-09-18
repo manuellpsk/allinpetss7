@@ -4,6 +4,9 @@ const passport = require('passport');
 const helprs = require('../lib/helpers');
 const pool = require('../database');
 const { isLoggedin } = require('../lib/auth');
+const jwt = require('jsonwebtoken');
+
+process.env.SECRET_KEY = 'key_allinpets';
 
 router.get('/signup', (req, res) => {
     if (!req.isAuthenticated()) {
@@ -20,20 +23,20 @@ router.post('/signup', async (req, res) => {
         rut: rut,
         nombre: req.body.nombre,
         password: password,
-        email: req.body.email,
+        email: req.body.email
     };
-    newUser.rut = parseInt(rut.substring(0, rut.indexOf('-')));
+    //newUser.rut = parseInt(rut.substring(0, rut.indexOf('-')));
     newUser.password = await helprs.encryptPassword(password);
     try {
         const resul = await pool.query('INSERT INTO Usuarios set ?', [newUser]);
         if (resul.insertId) {
-            res.redirect('/');
+            console.log(resul);
+            res.json({ status: newUser.rut + ' registrado' });
         } else {
-            res.redirect('/signup');
+            res.json({ error: 'Usario ya existe' });
         }
     } catch (error) {
-        console.log(error);
-        res.redirect('/signup');
+        res.send(error);
     }
 });
 
@@ -65,7 +68,7 @@ router.post('/signin', (req, res, next) => {
 router.get('/logout', (req, res) => {
     if (req.isAuthenticated()) {
         req.logOut();
-        req.flash('success','Usuario desconectado');
+        req.flash('success', 'Usuario desconectado');
         res.redirect("/");
     } else {
         res.redirect('/signin');

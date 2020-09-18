@@ -1,96 +1,99 @@
 {{#if user}}
-<div class="container">
-  {{> menu}}
-  <div class="h-100 row align-items-center">
-    <div class="col">
-      {{#if user}}
-      <div class="container p-4">
-        {{#each publicaciones}}
-        <div class="row">
-          <div class="col-md-12 my-2">
-            <div class="card border-info">
-              <div class="card-header">
-                <ul class="nav nav-pills card-header-pills">
-                  <li class="nav-item">
-                    <a href="/perfil/suser/{{idUsuarios}}" class="badge badge-light">
-                      <p class="h6 text-capitalize">{{nombre}}</p>
-                    </a>
-                  </li>
-                  <li class="nav-item ml-auto">
-                    <button data-toggle="modal" data-target="#loginModal" type="button"
-                      class="btn btn-warning btn-sm">Reportar</button>
-                  </li>
-                </ul>
-              </div>
-              <div class="card-body">
-                <div class="text-break font-weight-bold">
-                  {{descripcion}}
-                </div>
-              </div>
-              <div class="card-footer text-right">
-                <ul class="nav nav-pills card-header-pills">
-                  <li class="nav-item">
-                    <a href="/perfil/comentario/{{idPublicaciones}}" class="btn btn-outline-info btn-sm" role="button"
-                      aria-pressed="true">Comentarios </a>
-                  </li>
-                  <li class="nav-item ml-auto">
-                    <p><small>{{timeago fecha}}</small></p>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="modal fade" role="dialog" id="loginModal">
-            <div class="modal-dialog modal-dialog-centered">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h3 class="modal-title" name="idPub">Reportar Publicación.&nbsp;</h3>
-                  <button class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <form action="/perfil/denunciar" method="POST" onsubmit="return validarDenuncia();" name="formDenuncia">
-                  <div class="modal-body">
-                    <div class="modal-body">
-                      <div class="form-row">
-                        <div class="form-group col-md-3">
-                          <span>Número de Publicación </span>
-                        </div>
-                        <div class="form-group col-md-9">
-                          <input class="form-control-plaintext" type="text" value={{idPublicaciones}} name="idPub"
-                            readonly>
-                        </div>
-
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-8 col-sm-10">
+      <div class="container">
+        {{> menu}}
+        <div class="h-100 row align-items-center">
+          <div class="col">
+            {{#if user}}
+            <div class="container p-4">
+              {{#each publicaciones}}
+              <div class="row">
+                <div class="col-md-12 my-2">
+                  <div class="card border-info">
+                    <div class="card-header">
+                      <ul class="nav nav-pills card-header-pills">
+                        <li class="nav-item">
+                          <a href="/perfil/suser/{{idUsuarios}}" class="badge badge-light">
+                            <p class="h6 text-capitalize">{{nombre}}</p>
+                          </a>
+                        </li>
+                        <li class="nav-item ml-auto">
+                          <button data-toggle="modal" data-target="#loginModal" type="button"
+                            class="btn btn-warning btn-sm">Reportar</button>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="card-body">
+                      <div class="text-break font-weight-bold">
+                        {{descripcion}}
                       </div>
                     </div>
-                    <div class="form-group">
-                      <label for="denuncia">Por favor, resuma en 150 caracteres.</label>
-                      <textarea class="form-control" rows="4" name="denuncia" id="idDenuncia"
-                        style="resize: none;"></textarea>
+                    <div class="card-footer text-right">
+                      <ul class="nav nav-pills card-header-pills">
+                        <li class="nav-item">
+                          <a href="/perfil/comentario/{{idPublicaciones}}" class="btn btn-outline-info btn-sm"
+                            role="button" aria-pressed="true">Comentarios </a>
+                        </li>
+                        <li class="nav-item ml-auto">
+                          <p><small>{{timeago fecha}}</small></p>
+                        </li>
+                      </ul>
                     </div>
                   </div>
-                  <div class="modal-footer">
-                    <button type="submit" class="btn btn-success" id="btnEnviar">Enviar</button>
+                </div>
+                <div class="modal fade" role="dialog" id="loginModal">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content border-danger">
+                      <div class="modal-header bg-warning">
+                        <h3 class="modal-title" name="idPub">Reportar Publicación.&nbsp;</h3>
+                        <button class="close" data-dismiss="modal">&times;</button>
+                      </div>
+                      <form action="/perfil/denunciar" method="POST" class="needs-validation" name="formDenuncia">
+                        <div class="modal-body">
+                          <div class="form-row">
+                            <div class="form-group col-md-3">
+                              <span>Número de Publicación </span>
+                            </div>
+                            <div class="form-group col-md-9">
+                              <input class="form-control-plaintext" type="text" value={{idPublicaciones}} name="idPub"
+                                readonly>
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label for="denuncia">Por favor, resuma en 150 caracteres.</label>
+                            <textarea class="form-control" rows="4" name="denuncia" id="idDenuncia"
+                              style="resize: none;" required minlength="3" maxlength="150"></textarea>
+                            <button type="submit" class="btn btn-danger mt-2" id="btnEnviar">Enviar</button>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
                   </div>
-                </form>
+                </div>
               </div>
+              {{else}}
+              <div class="col-md-4 mx-auto">
+                <div class="card card-body text-center">
+                  <p>Aún no hay publicaciones para mostrar.</p>
+                  <a href="#" class="btn btn-primary">Buscar contactos...</a>
+                </div>
+              </div>
+              {{/each}}
             </div>
+            {{else}}
+            <div class="card text-center">
+              <h1>Debe ingresar al portal...</h1>
+            </div>
+            {{/if}}
           </div>
         </div>
-        {{else}}
-        <div class="col-md-4 mx-auto">
-          <div class="card card-body text-center">
-            <p>Aún no hay publicaciones para mostrar.</p>
-            <a href="#" class="btn btn-primary">Buscar contactos...</a>
-          </div>
-        </div>
-        {{/each}}
       </div>
-      {{else}}
-      <div class="card text-center">
-        <h1>Debe ingresar al portal...</h1>
-      </div>
-      {{/if}}
     </div>
+    {{>publicidad}}
   </div>
+</div>
 </div>
 {{else}}
 Debe registrarse...

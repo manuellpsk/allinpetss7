@@ -74,6 +74,20 @@ window.addEventListener('load', () => {
             });
         }
 
+        //validando comentarios
+        if (form.getAttribute('name') == 'formComentario') {
+            let input = document.getElementById('idComentario');
+            let btnComentar = document.getElementById('btnComentario');
+            input.addEventListener('keyup', (evt) => {
+                if (input.value.length > 0) {
+                    btnComentar.removeAttribute('disabled');
+                } else {
+                    btnComentar.setAttribute('disabled', true);
+                    evt.preventDefault();
+                    evt.stopPropagation();
+                }
+            });
+        }
         // Add a 'submit' event listener on each one
         form.addEventListener('submit', (evt) => {
             // check if the form input elements have the 'required' attribute  

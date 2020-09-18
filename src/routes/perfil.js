@@ -44,7 +44,7 @@ router.get('/home', async (req, res) => {
 //muestra las propias publicaciones
 router.get('/myfeed', async (req, res) => {
     if (req.isAuthenticated()) {
-        const publicaciones = await pool.query('SELECT * FROM publicaciones where idUsuarios =? and disponible=1', req.user.idUsuarios);
+        const publicaciones = await pool.query('SELECT * FROM publicaciones where idUsuarios =? and disponible=1 order by fecha desc', req.user.idUsuarios);
         res.render('perfil/myfeed', { publicaciones });
     } else {
         res.redirect('/signin');
@@ -61,7 +61,7 @@ router.get('/delete/:idPublicaciones', async (req, res) => {
             req.flash('success', 'Publicación eliminada');
             res.redirect('/perfil/myfeed');
         } else {
-            req.flash('error', 'No puede realizar esta operación');
+            req.flash('message', 'No puede realizar esta operación');
             res.redirect('/perfil/myfeed');
         }
     } else {
@@ -79,7 +79,7 @@ router.get('/pedit/:idPublicaciones', async (req, res) => {
             const publicaciones = await pool.query('SELECT * FROM Publicaciones WHERE idPublicaciones=?', idPublicaciones);
             res.render('perfil/pubedit', { publicaciones: publicaciones[0] });
         } else {
-            req.flash('error', 'No puede realizar esta operación');
+            req.flash('message', 'No puede realizar esta operación');
             res.redirect('/perfil/myfeed');
         }
     } else {
@@ -183,7 +183,7 @@ router.get('/comentario/:idPublicaciones', async (req, res) => {
             const comentarios = await pool.query("SELECT idcomentarios,idPublicaciones,idUsuariosComentario,comentario,comentarios.fecha,usuarios.nombre FROM comentarios INNER JOIN usuarios on comentarios.idUsuariosComentario=usuarios.idUsuarios where idPublicaciones=? order by comentarios.fecha asc", idPublicaciones);
             res.render('perfil/comentario', { comentarios: comentarios, publicaciones: publicaciones });
         } else {
-            req.flash('error', 'No puede realizar esta operación');
+            req.flash('message', 'No puede realizar esta operación');
             res.redirect('/perfil/myfeed');
         }
     } else {
@@ -216,7 +216,7 @@ router.get('/denuncias', async (req, res) => {
             console.log(denuncias);
             res.render('perfil/denuncias', { arreglo: denuncias });
         } else {
-            req.flash('error', 'No puede realizar esta operación');
+            req.flash('message', 'No puede realizar esta operación');
             res.redirect('/perfil/myfeed');
         }
     } else {
@@ -230,15 +230,17 @@ router.get('/denunciar/proceder/:iddenuncias/:bool', async (req, res) => {
         if (req.user.tipo == 2) {
             const { iddenuncias } = req.params;
             const { bool } = req.params;
-            if (bool) {
+            if (bool=='1') {
                 await pool.query('call banear(?)', iddenuncias);
+                req.flash('success','La demanda SÍ procede y fue penalizada');
                 res.redirect('/perfil/denuncias');
             } else {
                 await pool.query('UPDATE DENUNCIAS SET estado=0,comprobacion=0 where iddenuncias=?', iddenuncias);
+                req.flash('success','La demanda NO procede');
                 res.redirect('/perfil/denuncias');
             }
         } else {
-            req.flash('error', 'No puede realizar esta operación');
+            req.flash('message', 'No puede realizar esta operación');
             res.redirect('/perfil/myfeed');
         }
     } else {
@@ -261,7 +263,7 @@ router.get('/suser/:idUsuario', async (req, res) => {
                 console.log(findUser[0]);
                 res.render('perfil/suser', { findUsuario: findUser[0] });
             } else {
-                req.flash('error', 'No se puedo encontrar al usuario');
+                req.flash('message', 'No se puedo encontrar al usuario');
                 res.redirect('/perfil/home');
             }
         }

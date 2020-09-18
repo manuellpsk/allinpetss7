@@ -20,7 +20,7 @@ passport.use('local.singin', new LocalStrategy({
                 done(null, false, req.flash('message', 'Credenciales Incorrectas'));
             }
         } else {
-            done(null, false, req.flash('message', 'Credenciales Incorrectas'));
+            done(null, false, req.flash('message', 'Usted está penalizado, no puede ingresar al portal'));
         }
     } else {
         return done(null, false, req.flash('message', 'Credenciales Incorrectas'));
