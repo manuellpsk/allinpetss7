@@ -8,6 +8,8 @@ const MysqlStore = require('express-mysql-session');
 const passport = require('passport');
 const { database } = require('./keys');
 const auth = require('./lib/auth');
+const cors = require('cors');
+
 
 //inicializacion
 const app = express();
@@ -24,12 +26,11 @@ app.engine('.hbs', exphbs({
     helpers: require('./lib/handlebars')
 }));
 app.set('view engine', '.hbs');
-
 //middlewares: mostrar las peticiones que llegan al servidor. aceptar datos del formulario
 app.use(session({
     secret: 'allinpetssession',
-    resave: false,
-    saveUninitialized: false,
+    resave: true,
+    saveUninitialized: true,
     store: new MysqlStore(database)
 }));
 app.use(flash());
@@ -38,11 +39,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(cors())
 
 //Variable globales solicitudes, respuesta
 app.use((req, res, next) => {
-    app.locals.message = req.flash('message');
-    app.locals.success = req.flash('success');
     app.locals.user = req.user;
     next();
 });
@@ -55,6 +55,14 @@ app.use('/perfil', require('./routes/perfil'));
 //public
 app.use(express.static(path.join(__dirname, 'public')))
 
+//middleware para error 500
+app.use((error, req, res, next) => {
+    const statusCode = res.statusCode === 200 ? 500 : res.statusCode;
+    res.status(statusCode).json({
+        message: `Ha ocurrido un error FATAL en la ruta ${req.originalUrl}`,
+        stack: error.message
+    });
+});
 //start server
 app.listen(app.get('port'), () => {
     console.log('Server On, puerto:', app.get('port'));

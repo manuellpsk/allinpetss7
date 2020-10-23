@@ -1,0 +1,8 @@
+.modal{
+    overflow-y: auto;
+}
+.modal-open{
+    padding-right: 0px !important;
+    overflow:auto;
+    overflow-x:hidden;
+ }
