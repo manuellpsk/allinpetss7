@@ -5,14 +5,14 @@ import { doLogin } from '../services/Funciones'
 import { getMyUser, doRegister, doUpdateUser } from './../services/Funciones';
 
 export default function useUser() {
-    const { jwt, setJWT, setIdUserGlobal } = useContext(UserContext);
+    const { jwt, setJWT, setIdUserGlobal, cookies } = useContext(UserContext);
     const [failLog, setfailLog] = useState(false);
     const [dataUser, setDataUser] = useState(async () => {
         try {
             const res = getMyUser(jwt)
             return (await res).data
         } catch (e) {
-            return null
+            logout()
         }
     });
 
@@ -25,19 +25,22 @@ export default function useUser() {
             setfailLog(false)
             const res = await doLogin(user);
             const { token } = res.data;
-            window.sessionStorage.setItem('jwt', token)
+            cookies.set('jwt', token, {
+                path: '/',
+                maxAge: 3600
+            })
             setJWT(token)
-            console.log(jwt_decode(token)._idUsuarios)
             setIdUserGlobal(jwt_decode(token)._idUsuarios)
         } catch (error) {
-            window.sessionStorage.removeItem('jwt')
+            setJWT(null)
+            cookies.remove('jwt')
             setfailLog(true)
             console.log(error)
         }
     }, [setJWT, failLog])
 
     const logout = useCallback(() => {
-        window.sessionStorage.removeItem('jwt')
+        cookies.remove('jwt')
         setJWT(null)
         setIdUserGlobal(null)
     }, [setJWT, jwt])
@@ -47,7 +50,8 @@ export default function useUser() {
             const res = getMyUser(jwt)
             return (await res).data
         } catch (e) {
-            return
+            setJWT(null)
+            cookies.remove('jwt')
         }
     }
 

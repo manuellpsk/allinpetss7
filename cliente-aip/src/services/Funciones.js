@@ -233,3 +233,86 @@ export const doAPIPublicacion = async (token, descripcion) => {
         throw { name: 'Error', message: err.response };
     }
 }
+
+//obtener denuncias, sólo para administradores
+export const getAPIdenuncia = async (token) => {
+    try {
+        if (token) {
+            const resp = await axios({
+                url: `${baseUrl}/perfil/denuncia`,
+                method: 'get',
+                headers: {
+                    'Authorization': token
+                }
+            });
+            console.log(resp)
+            return resp;
+        }
+    } catch (err) {
+        console.log(err.response)
+        throw { name: 'Error', message: err.response };
+    }
+}
+
+//denunciar una publicacion
+export const denunciar = async (idPub, denuncia, token) => {
+    try {
+        const resp = await axios({
+            url: `${baseUrl}/perfil/denuncia`,
+            method: 'post',
+            headers: {
+                'Authorization': token
+            },
+            data: {
+                idPub,
+                denuncia
+            }
+        })
+        console.log(resp)
+    } catch (err) {
+        console.log(err.response)
+        throw { name: 'Error', message: err.response }
+    }
+}
+
+//archivar la denuncia o banear al usuario culpable
+export const doBan = async (iddenuncias, flag, token) => {
+    try {
+        console.log(iddenuncias, flag)
+        const resp = await axios({
+            url: `${baseUrl}/perfil/ban`,
+            method: 'put',
+            headers: {
+                'Authorization': token
+            },
+            data: {
+                iddenuncias,
+                flag
+            }
+        });
+        console.log(resp)
+        return resp.status;
+    } catch (err) {
+        console.log(err.response)
+        throw { name: 'Error', message: err.response }
+    }
+}
+
+export const getAPIallChats = async (token) => {
+    try {
+        if (token) {
+            const resp = await axios({
+                url: `${baseUrl}/chat/all`,
+                method: 'get',
+                headers: {
+                    'Authorization': token
+                }
+            });
+            console.log(resp)
+            return resp;
+        }
+    } catch (err) {
+        console.log(err.response)
+        throw { name: 'Error', message: err.response };
+    }
+}
