@@ -4,41 +4,58 @@ import * as Icon from 'react-bootstrap-icons';
 import io from 'socket.io-client'
 //import socket from '../../services/Socket'
 import { UserContext } from '../../context/UserContext'
+import useChat from '../../hooks/UseChat';
 
 export const Chat = (props) => {
 
     const { idUserGlobal } = useContext(UserContext);
     const { idChat } = props
     const [newMensaje, setNewMensaje] = useState('');
-    const [mensajesChat, setMensajesChat] = useState(['Start...'])
-    let socket
+    const [mensajesChat, setMensajesChat] = useState([])
+    const [socket, setSocket] = useState();
+    const { getMensajesOfChat } = useChat()
+
     const sendText = () => {
-        //socket.emit('mensaje', newMensaje)
+        const data = {
+            idUsuarios: idUserGlobal,
+            idChat,
+            descripcion: newMensaje
+        }
+        socket.emit('mensajeToServer', data)
         setNewMensaje('')
     }
 
     useEffect(() => {
         if (idChat !== 0) {
-            socket = io("http://localhost:5000/", { query: `idChat=${idChat}&idUser=${idUserGlobal}` })
-            //socket.connect()
-            socket.emit('conectado', 'holaaaa')
-            console.log(socket)
-            //socket.emit('conectado', 'holaaaa')
+            setSocket(io("http://localhost:5000/", { query: `idChat=${idChat}&idUser=${idUserGlobal}` }))
+            if (socket) {
+                socket.emit('conectado', 'holaaaa')
+            }
+            getMensajesOfChat(idChat).then(res => {
+                if (res) {
+                    setMensajesChat(res)
+                } else {
+                    setMensajesChat([])
+                }
+                console.log(mensajesChat)
+            })
         }
         return () => {
-            if (idChat !== 0) socket.off()
+            if (socket) { socket.off() }
         }
     }, [idChat])
 
     useEffect(() => {
-        console.log('efect chat')
-        /* socket.on('mensajes', data => {
-            setMensajesChat([...mensajesChat, data])
-        }) */
-        return () => {
-            //socket.off()
+        if (socket) {
+            socket.on('mensajeToClient', data => {
+                console.log(data)
+                setMensajesChat([...mensajesChat, data])
+            })
         }
-    }, [mensajesChat])
+        return () => {
+            if (socket) { socket.off() }
+        }
+    }, [mensajesChat]);
 
     if (idChat === 0) {
         return (
@@ -56,8 +73,8 @@ export const Chat = (props) => {
                     <Card.Body>
                         {
                             mensajesChat.map(val => (
-                                <div>
-                                    {val}
+                                <div key={val.idmensajes}>
+                                    {val.descripcion}
                                 </div>
                             ))
                         }
@@ -66,13 +83,14 @@ export const Chat = (props) => {
                         <InputGroup className="mb-3">
                             <FormControl
                                 placeholder="Escribe un mensaje..."
+                                maxLength='20'
                                 onChange={e => setNewMensaje(e.target.value)} value={newMensaje}
-                                onKeyPress={e => { if (e.key === 'Enter') sendText() }}
+                                onKeyPress={e => { if (e.key === 'Enter' && e.target.value.length <= 20) sendText() }}
                             />
                             <InputGroup.Append>
                                 <Button type='submit' variant="outline-primary"
                                     onClick={sendText}
-                                    disabled={!Boolean(newMensaje.trim().length > 0)}
+                                    disabled={!Boolean(newMensaje.trim().length > 0 && newMensaje.trim().length < 20)}
                                 >
                                     <Icon.ArrowRightCircle /> Enviar</Button>
                             </InputGroup.Append>

@@ -1,23 +1,62 @@
 import { toast } from 'react-toastify';
+const timeClose = 2500
 
 const optionsErrorToast = {
-    autoClose: 5000,
     type: toast.TYPE.ERROR,
+    position: "top-right",
+    autoClose: timeClose,
     hideProgressBar: false,
-    position: toast.POSITION.BOTTOM_LEFT,
-    pauseOnHover: true,
+    closeOnClick: true,
+    pauseOnHover: false,
+    draggable: true,
+    progress: undefined,
 }
+
 const optionsRightToast = {
-    autoClose: 5000,
     type: toast.TYPE.SUCCESS,
+    position: "top-right",
+    autoClose: timeClose,
     hideProgressBar: false,
-    position: toast.POSITION.BOTTOM_LEFT,
-    pauseOnHover: true,
+    closeOnClick: true,
+    pauseOnHover: false,
+    draggable: true,
+    progress: undefined,
+}
+
+const optionsWarningToast = {
+    type: toast.TYPE.WARNING,
+    position: "top-right",
+    autoClose: timeClose,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: false,
+    draggable: true,
+    progress: undefined,
+}
+
+const optionsInfoToast = {
+    type: toast.TYPE.INFO,
+    position: "top-right",
+    autoClose: timeClose,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: false,
+    draggable: true,
+    progress: undefined,
 }
 
 export const notifyError = (message) => {
-    return toast('Ups! '+message, optionsErrorToast)
+    return toast('Ups! ' + message, optionsErrorToast)
 }
-export const notifyRight = () => {
-    return toast('La operación se ha realizado correctamente!', optionsRightToast)
+export const notifyRight = (message, doNext) => {
+    if (doNext) {
+        optionsRightToast.onClose = doNext
+    }
+    return toast('Éxitoso! ' + message, optionsRightToast)
+}
+export const notifyWarning = (message) => {
+    return toast('Atento! ' + message, optionsWarningToast)
+}
+export const notifyInfo = (message) => {
+    return toast('Info! ' + message, optionsInfoToast)
 }

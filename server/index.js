@@ -6,7 +6,7 @@ const passport = require('passport');
 const cors = require('cors');
 require('dotenv').config({
     path: path.join(__dirname, '.env')
-});
+})
 /* 
 const { database } = require('./keys');
 const auth = require('./lib/auth').default;

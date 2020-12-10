@@ -1,11 +1,12 @@
 import jwt_decode from "jwt-decode";
-import { useContext, useCallback, useState } from 'react'
+import { useContext, useCallback, useState, useRef } from 'react'
 import { UserContext } from '../context/UserContext'
-import { doLogin } from '../services/Funciones'
+import { doLogin, doLoginFacebook } from '../services/Funciones'
 import { getDataUser, getMyUser, doRegister, doUpdateUser } from './../services/Funciones';
 export default function useUser() {
+
     const { jwt, setJWT, setIdUserGlobal, cookies } = useContext(UserContext);
-    const [failLog, setfailLog] = useState(false);
+    const failLog = useRef(false)
     const [dataUser, setDataUser] = useState(async () => {
         try {
             const res = getMyUser(jwt)
@@ -15,26 +16,23 @@ export default function useUser() {
         }
     });
 
-    const login = useCallback(async (username, password) => {
-        const user = {
-            rut: username,
-            password
-        }
+    const login = useCallback(async (username, password, objFacebook, tipoLogin) => {
         try {
-            setfailLog(false)
-            const res = await doLogin(user);
-            const { token } = res.data;
+            failLog.current = false
+            const user = tipoLogin === 1 ? { rut: username, password } : objFacebook
+            const res = tipoLogin === 1 ? await doLogin(user) : await doLoginFacebook(user)
+            const { token } = res.data
             cookies.set('jwt', token, {
-                path: '/',
-                maxAge: 3600
+                path: '/'
             })
             setJWT(token)
             setIdUserGlobal(jwt_decode(token)._idUsuarios)
         } catch (error) {
+            failLog.current = true
             setJWT(null)
             cookies.remove('jwt')
-            setfailLog(true)
-            console.log(error)
+        } finally {
+            console.log(failLog.current)
         }
     }, [setJWT, failLog])
 
@@ -54,7 +52,7 @@ export default function useUser() {
         }
     }
 
-    const getDataUser = async (jwt, idUser) => {
+    const getInfoUser = async (idUser) => {
         try {
             const res = getDataUser(jwt, idUser)
             return (await res).data
@@ -92,8 +90,8 @@ export default function useUser() {
         logout,
         getMyDataUser,
         dataUser,
-        getDataUser,
+        getInfoUser,
         updateUser,
-        failLog: failLog
+        failLog
     }
 }

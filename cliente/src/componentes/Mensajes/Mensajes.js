@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Container, Row, Col, Card, Button } from 'react-bootstrap'
 import useChat from './../../hooks/UseChat';
 import { Chat } from '../Chat/Chat'
+import useUser from '../../hooks/useUser';
 
 export const Mensajes = () => {
     const [chatList, setChatList] = useState([]);
@@ -11,15 +12,10 @@ export const Mensajes = () => {
     useEffect(() => {
         const loadData = async () => {
             const result = await getAllChats()
-            console.log(result)
-            setChatList(await result)
+            if (result) { setChatList(result) }
         }
         loadData()
     }, [])
-
-    const getInfoDestinatarios = idUser => {
-        
-    }
 
     return (
         <div>
@@ -32,11 +28,11 @@ export const Mensajes = () => {
                             </Card.Header>
                             <Card.Body>
                                 {
-                                    chatList.map(val => (
-                                        <Button variant='outline-info' className='d-block w-100 my-1' onClick={
+                                    chatList.map((val, i) => (
+                                        <Button key={i} variant='outline-info' className='d-block w-100 my-1' onClick={
                                             e => (setPaintChat(val.idchat))
                                         }>
-                                            {val.idUserB}
+                                            {val.nombre}
                                         </Button>
                                     ))
                                 }

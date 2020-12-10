@@ -7,7 +7,7 @@ import * as Icon from 'react-bootstrap-icons';
 
 function Configuracion(props) {
 
-    const { getMyDataUser, dataUser, logout, updateUser } = useUser()
+    const { getMyDataUser, logout, updateUser } = useUser()
     let history = useHistory()
     const [usuario, setUsuario] = useState({});
     const [nombre, setNombre] = useState('');
@@ -25,7 +25,7 @@ function Configuracion(props) {
     }
 
     const handleModificar = () => {
-        if (password != rePassword) {
+        if (password !== rePassword) {
             setError(true)
             return
         } else {

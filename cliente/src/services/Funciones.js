@@ -23,6 +23,22 @@ export const doLogin = async user => {
             method: 'post',
             data: user
         });
+        console.log(resp)
+        return resp;
+    } catch (err) {
+        console.log(err.message)
+        throw { name: 'Error', message: err.response };
+    }
+}
+
+//funcion para hacer login con facebook
+export const doLoginFacebook = async user => {
+    try {
+        const resp = await axios({
+            url: `${baseUrl}/signFacebook`,
+            method: 'post',
+            data: user
+        });
         return resp;
     } catch (err) {
         console.log(err.message)
@@ -173,7 +189,7 @@ export const getMyUser = async (token) => {
     }
 }
 
-export const getDataUser = async (token, idUser) => {
+export const getDataUser = async (token, iduser) => {
     try {
         if (token) {
             const resp = await axios({
@@ -183,7 +199,7 @@ export const getDataUser = async (token, idUser) => {
                     'Authorization': token
                 },
                 params: {
-                    idUser
+                    iduser
                 }
             });
             return resp;
@@ -329,8 +345,29 @@ export const getAPIallChats = async (token) => {
                     'Authorization': token
                 }
             });
-            console.log(resp)
             return resp;
+        }
+    } catch (err) {
+        console.log(err.response)
+        throw { name: 'Error', message: err.response };
+    }
+}
+
+export const getMensajesChat = async (token, idChat) => {
+    try {
+        if (token) {
+            const resp = await axios({
+                url: `${baseUrl}/chat/mensaje`,
+                method: 'get',
+                headers: {
+                    'Authorization': token
+                },
+                params: {
+                    idChat
+                }
+            });
+            console.log(resp.data)
+            return resp.data;
         }
     } catch (err) {
         console.log(err.response)

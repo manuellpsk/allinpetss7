@@ -66,7 +66,7 @@ router.get('/', auth.comun, async (req, res, next) => {
 router.get('/all', auth.comun, async (req, res, next) => {
     try {
         const { _idUsuarios } = jwt.verify(req.headers.authorization, process.env.SECRET_KEY)
-        await pool.query("select idchat, concat(idUserA,idUserB) as idUserB from (select idchat, if (idUserA=?,'',idUserA) as idUserA,if(idUserB=?,'',idUserB) as idUserB from (select * from chat where idUserA = ? or idUserB=?) as chatsUser) as finalTable", [_idUsuarios,_idUsuarios,_idUsuarios,_idUsuarios], (err, result) => {
+        await pool.query("select idchat, concat(idUserA,idUserB) as idUserB, u.nombre from (select idchat, if (idUserA=?,'',idUserA) as idUserA,if(idUserB=?,'',idUserB) as idUserB from (select * from chat where idUserA = ? or idUserB=?) as chatsUser) as finalTable inner join usuarios u on concat(idUserA,idUserB)=u.idUsuarios", [_idUsuarios,_idUsuarios,_idUsuarios,_idUsuarios], (err, result) => {
             handleDBerrors(err, res, () => {
                 if (result.length > 0) {
                     const chats = arraytoJson(result);
@@ -130,13 +130,13 @@ router.get('/mensaje', auth.comun, async (req, res, next) => {
     try {
         const { idChat } = req.query
         if (idChat) {
-            await pool.query('SELECT * FROM mensajes WHERE idChat = ? ORDER BY fecha DESC', idChat, (err, result) => {
+            await pool.query('SELECT * FROM mensajes WHERE idChat = ? ORDER BY fecha ASC', idChat, (err, result) => {
                 handleDBerrors(err, res, () => {
                     if (result.length > 0) {
                         res.status(200).json({
-                            Chat: idChat,
-                            Cantidad: result.length,
-                            Comentarios: arraytoJson(result)
+                            chat: idChat,
+                            cantidad: result.length,
+                            mensajesList: arraytoJson(result)
                         })
                     } else {
                         res.status(404).json({

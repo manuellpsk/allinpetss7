@@ -1,15 +1,17 @@
-var app = require('express')();
-var http = require('http').createServer(app);
+const app = require('express')();
+const http = require('http').createServer(app);
 const io = require("socket.io")(http, {
     cors: {
         origin: "http://localhost:3000",
         methods: ["GET", "POST"]
     }
 });
+const pool = require('./database')
+
 const chatListActive = {}
 
 app.get('/', (req, res) => {
-    res.send('hola')
+    res.send('Socket escuchando...')
 });
 
 //buscar un chat por id en chatListActive
@@ -64,9 +66,8 @@ io.on('connection', (socket) => {
         socketPrev.disconnect()
     }
     insertChatList(idChat, idUser, socket)
-    socket.on('conectado', (data) => {
-        console.log('New user, data:', socketId, idUser, idChat, data)
-    })
+    console.log('New user, data:', socketId, idUser, idChat)
+
     socket.on('disconnect', () => {
         const { idChat, idUser } = findChatUserBySocket(socketId)
         const sizeUsersInChat = Object.keys(chatListActive[`${idChat}`]).length
@@ -77,11 +78,54 @@ io.on('connection', (socket) => {
         }
         console.log(socket.id, 'se desconecto')
     })
-    socket.on('mensaje', data => {
-        io.emit('mensajes', data)
+    socket.on('mensajeToServer', async data => {
+        const { idUsuarios, idChat, descripcion } = data
+        console.log('Data recibida: ', idUsuarios, idChat, descripcion)
+        const res = await insertMensaje(idUsuarios, idChat, descripcion)
+        if (res) {
+            console.log('tamnio de esat mierda!!!!', Object.values(chatListActive[`${idChat}`]).length)
+            Object.values(chatListActive[`${idChat}`]).map(e => {
+                e.emit('mensajeToClient', res)
+            })
+            /* Object.values(chatListActive.idChat).map(e => {
+                e.emit('mensajeToClient', res)
+            }) */
+        } else {
+            console.log('error para enviar mensajes al chat')
+        }
     })
 });
 
+//guardar nuevo mensaje en la base de datos idUsuarios: id del usuario que realiza el mensaje, idChat de la conversacion, descipcion: mensaje.
+const insertMensaje = async (idUsuarios, idChat, descripcion) => {
+
+    try {
+        const fecha = new Date().toISOString()
+        const newMensaje = {
+            idUsuarios,
+            idChat,
+            descripcion,
+        }
+        const res = await pool.query('INSERT INTO mensajes SET ?', newMensaje)
+        console.log(res)
+        const lastInsert = res.insertId
+        if (lastInsert) {
+            return {
+                idmensajes: lastInsert,
+                idUsuarios,
+                idChat,
+                descripcion,
+                fecha
+            }
+        } else {
+            return null
+        }
+    } catch (error) {
+        console.log(error)
+        return null
+    }
+}
+
 http.listen(5000, () => {
-    console.log('listening on 5000');
+    console.log('listening on', 5000);
 });

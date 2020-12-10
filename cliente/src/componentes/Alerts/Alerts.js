@@ -1,13 +1,23 @@
 import React from 'react';
-import { Alert } from 'react-bootstrap'
+import {ToastContainer} from 'react-toastify'
 import './styles.css'
 
 function Alerts(props) {
     return (
         <div>
-            <Alert className='position-absolute'
-                variant={props.variant}
-                transition='true' > {props.value} </Alert> 
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+            />
+            {/* Same as */}
+            <ToastContainer />
         </div>
     );
 }
