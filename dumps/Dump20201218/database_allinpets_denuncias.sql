@@ -1,0 +1,37 @@
+-- MySQL dump 10.13  Distrib 8.0.20, for Win64 (x86_64)
+--
+-- Host: localhost    Database: database_allinpets
+-- ------------------------------------------------------
+-- Server version	8.0.20
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Dumping data for table `denuncias`
+--
+
+LOCK TABLES `denuncias` WRITE;
+/*!40000 ALTER TABLE `denuncias` DISABLE KEYS */;
+INSERT INTO `denuncias` VALUES (40,10,15,24,'2020-10-28 03:50:04','denuncia 24 false',0,0),(41,10,19,25,'2020-10-28 03:50:12','denuncia 25 true',0,1),(42,10,19,25,'2020-10-28 03:50:18','denuncia 25 true',0,1),(43,10,19,25,'2020-10-28 03:50:19','denuncia 25 true',0,1),(44,10,19,25,'2020-10-28 03:50:20','denuncia 25 true',0,1),(45,10,19,25,'2020-10-28 03:55:04','denuncia 25 true',0,1),(46,10,19,25,'2020-10-28 03:55:07','denuncia 25 true',0,1),(47,10,19,25,'2020-10-28 04:04:02','denuncia 25 true',0,1),(48,10,19,25,'2020-10-28 04:04:03','denuncia 25 true',0,1),(49,10,19,25,'2020-10-28 04:08:43','denuncia 25 true',0,1),(50,10,19,25,'2020-10-28 04:09:53','denuncia 25 true',0,1),(51,10,19,25,'2020-10-28 04:49:03','denuncia 25 true',0,0),(52,10,15,24,'2020-10-28 05:01:59','denuncia 24 false',0,0),(53,10,15,24,'2020-10-28 06:10:21','denuncia 24 false',0,0),(54,10,15,24,'2020-10-28 06:10:23','denuncia 24 false',0,0),(55,10,15,24,'2020-10-28 06:10:24','denuncia 24 false',0,0),(56,10,15,24,'2020-10-28 06:10:25','denuncia 24 false',0,0),(57,10,15,24,'2020-10-28 06:11:07','denuncia 24 false',0,0),(58,10,15,24,'2020-10-28 06:11:36','denuncia 24 false',0,0),(59,10,15,24,'2020-10-28 06:13:36','denuncia 24 false',0,0),(60,10,15,24,'2020-10-28 06:14:35','denuncia 24 false',0,0),(61,10,15,24,'2020-10-28 06:14:36','denuncia 24 false',0,0),(62,10,15,24,'2020-10-28 06:15:01','1',0,0),(63,10,15,24,'2020-10-28 06:15:04','2',0,0),(64,10,15,24,'2020-10-28 06:15:08','3',0,0),(65,15,17,323,'2020-10-29 03:27:29','test app 1',0,0),(66,15,17,323,'2020-10-29 03:28:06','test app 2',0,0),(67,10,15,329,'2020-11-23 16:19:03','asd',0,0),(68,10,15,330,'2020-12-12 05:17:24','Es ofensivo',0,0),(69,105,15,330,'2020-12-14 16:14:23','Esto es ofensivo',0,0);
+/*!40000 ALTER TABLE `denuncias` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2020-12-18 16:36:03
