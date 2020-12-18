@@ -1,0 +1,6 @@
+#mensajesBox{
+    overflow-y: scroll;
+    min-height: 75vh;
+    max-height: 75vh;
+
+}

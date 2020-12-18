@@ -12,7 +12,7 @@ export default function useGetPubli() {
         try {
             setLoading(true)
             const res = getAPIPubli(jwt, pge)
-            setHasMore((await res).data.cantidad != 0)
+            setHasMore((await res).data.cantidad !== 0)
             setError(false)
             setLoading(false)
             return Object.values((await res).data.publicaciones)

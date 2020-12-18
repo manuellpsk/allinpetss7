@@ -16,11 +16,9 @@ export default (props) => {
     const [password, setPassword] = useState('');
     const [show, setShow] = useState(false);
     const { isLogged, login, failLog } = useUser();
-    const [showAlert, setShowAlert] = useState(false);
 
     const handleClose = () => {
         setShow(false)
-        const nav = document.getElementById('navbar')
     }
     const handleShow = () => {
         setShow(true);
@@ -50,7 +48,7 @@ export default (props) => {
 
     const responseFacebook = response => {
         console.log(response)
-        //login(null, null, response, 2);
+        login(null, null, response, 2);
     }
 
     const validateRut = e => {

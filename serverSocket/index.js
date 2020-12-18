@@ -83,7 +83,6 @@ io.on('connection', (socket) => {
         console.log('Data recibida: ', idUsuarios, idChat, descripcion)
         const res = await insertMensaje(idUsuarios, idChat, descripcion)
         if (res) {
-            console.log('tamnio de esat mierda!!!!', Object.values(chatListActive[`${idChat}`]).length)
             Object.values(chatListActive[`${idChat}`]).map(e => {
                 e.emit('mensajeToClient', res)
             })

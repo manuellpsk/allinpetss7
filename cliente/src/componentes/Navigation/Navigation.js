@@ -12,7 +12,7 @@ const Drop = () => {
         <>
             <Navbar.Toggle></Navbar.Toggle>
             <Navbar.Collapse className='justify-content-end'>
-                <Link to='/home/configuracion' className='btn btn-outline-dark float-right'>
+                <Link to='/home/configuracion' className='btn btn-primary float-right'>
                     <Icon.Gear size="18"></Icon.Gear>
                     <small className='font-weight-bold'> Mi Cuenta</small>
                 </Link>

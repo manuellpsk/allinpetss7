@@ -11,7 +11,7 @@ export default function useDenuncias() {
         try {
             setLoading(true)
             const res = getAPIdenuncia(jwt);
-            setHasMore((await res).data.cantidad != 0)
+            setHasMore((await res).data.cantidad !== 0)
             setLoading(false)
             console.log((await res).data.denuncias)
             return Object.values((await res).data.denuncias)

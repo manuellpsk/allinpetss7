@@ -4,6 +4,7 @@ import { Card, Button, FormControl, InputGroup } from 'react-bootstrap'
 import './styles.css'
 import * as Icon from 'react-bootstrap-icons';
 import useComentarios from './../../hooks/useComentarios';
+import StartChat from './StartChat';
 
 export default function FormatPub(props) {
     const { publi } = props
@@ -22,10 +23,28 @@ export default function FormatPub(props) {
                 setNewComentario('')
             )
     }
+
+    const formatoFecha = (isoDate) => {
+        console.log(new Date(isoDate).toLocaleString().substring(0, 10), '  ',)
+        if (new Date(isoDate).toLocaleString().substring(0, 10) === new Date().toLocaleString().substring(0, 10)) {
+            return 'Hoy'
+        } else {
+            return new Date(isoDate).toLocaleDateString()
+        }
+    }
+
+
     return (
-        <div id='formato' className='mx-auto my-3' key={publi.idPublicaciones}>
+        <div id='formato' className='my-3' key={publi.idPublicaciones}>
             <Card border='primary'>
-                <Card.Header>{publi.nombre || new Date(publi.fecha).toString().replace('GMT-0300', '')}</Card.Header>
+                <Card.Header className='d-flex'>
+                    <Card.Title className='w-50 d-inline-block'>
+                        <StartChat idUser={publi.idUsuarios} name={publi.nombre}></StartChat>
+                    </Card.Title>
+                    <Card.Subtitle className='w-50 d-inline-block text-right'>
+                        Fecha de Publicación: {formatoFecha(publi.fecha)}
+                    </Card.Subtitle>
+                </Card.Header>
                 <Card.Body variant='light'>
                     <p >
                         {publi.descripcion}
@@ -33,7 +52,7 @@ export default function FormatPub(props) {
                     <span className='pull-right'>
                         <Link to={{
                             pathname: '/home/publicacion/' + publi.idPublicaciones
-                        }}>Ver más</Link>
+                        }} style={{ color: 'black' }} >Ver publicación</Link>
                     </span>
                 </Card.Body>
                 <Card.Footer >
@@ -43,9 +62,11 @@ export default function FormatPub(props) {
                             aria-label="Recipient's username"
                             aria-describedby="basic-addon2"
                             placeholder="Escribe un comentario..." onChange={e => setNewComentario(e.target.value)} value={newComentario}
+                            required
+                            maxLength='250'
                         />
                         <InputGroup.Append>
-                            <Button variant="outline-primary" onClick={handleNewComentario}
+                            <Button variant="success" onClick={handleNewComentario}
                                 disabled={!Boolean(newComentario.trim().length > 0)}
                             > <Icon.ArrowRightCircle /> Enviar</Button>
                         </InputGroup.Append>

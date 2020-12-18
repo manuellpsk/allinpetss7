@@ -91,7 +91,7 @@ router.post('/signin', (req, res, next) => {
 //login de usuarios
 router.post('/signFacebook', async (req, res, next) => {
 
-    console.log('login with facebook...')
+    console.log('login with facebook...', req.body)
     try {
         const isRegister = await pool.query('SELECT * FROM usuarios WHERE email = ?', req.body.email)
         if (isRegister.length > 0) {

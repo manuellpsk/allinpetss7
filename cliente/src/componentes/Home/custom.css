@@ -1,17 +1,14 @@
 .sidenav {
-    height: 100%;
-    width: 160px;
-    position: fixed;
+    height: 100vh;
+    min-width: 100%;
     z-index: 0;
     top: 0;
     left: 0;
     overflow-x: hidden;
-    padding-top: 6%;
     background-color: #46ffa3;
   }
   
   .sidenav a {
-    position: fixed;
     padding: 10px 12px 6px 16px;
     text-decoration: none;
     color: #000000;
@@ -24,8 +21,6 @@
   
   .main {
     position: relative;
-    margin-left: 160px; /* Same as the width of the sidenav */
-    padding: 0px 10px;
   }
   @media screen and (max-width: 540px) {
     .sidenav {

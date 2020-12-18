@@ -366,7 +366,6 @@ export const getMensajesChat = async (token, idChat) => {
                     idChat
                 }
             });
-            console.log(resp.data)
             return resp.data;
         }
     } catch (err) {
@@ -375,3 +374,37 @@ export const getMensajesChat = async (token, idChat) => {
     }
 }
 
+//comenzar un nuevo chat y enviar mensaje
+export const doNewChat = async (userB, newMensaje, token) => {
+    try {
+        const resp = await axios({
+            url: `${baseUrl}/chat/`,
+            method: 'post',
+            headers: {
+                'Authorization': token
+            },
+            data: {
+                userB
+            }
+        })
+        console.log(resp.data.chatid)
+        if (resp.status === 200) {
+            const res = await axios({
+                url: `${baseUrl}/chat/mensaje`,
+                method: 'post',
+                headers: {
+                    'Authorization': token
+                },
+                data: {
+                    idChat: resp.data.chatid,
+                    descripcion: newMensaje
+                }
+            })
+            console.log(res)
+        }
+        return true
+    } catch (err) {
+        console.log(err.response)
+        throw { name: 'Error', message: err.response }
+    }
+}

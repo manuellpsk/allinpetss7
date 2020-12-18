@@ -1,4 +1,4 @@
-import { useEffect, useContext, useState, useCallback } from 'react'
+import { useContext, useState } from 'react'
 import { getAPImyPubli } from '../services/Funciones';
 import { UserContext } from '../context/UserContext';
 
@@ -11,7 +11,7 @@ export default function useGetMyPubli() {
         try {
             setLoading(true)
             const res = getAPImyPubli(jwt, pge)
-            setHasMore((await res).data.cantidad != 0)
+            setHasMore((await res).data.cantidad !== 0)
             setError(false)
             setLoading(false)
             return Object.values((await res).data.publicaciones)

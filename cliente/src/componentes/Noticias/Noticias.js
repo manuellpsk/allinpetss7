@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
+import { Row, Col } from 'react-bootstrap'
 import useGetPubli from '../../hooks/useGetPubli';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import useUser from '../../hooks/useUser'
@@ -6,6 +7,7 @@ import Loading from './../Recursos/Loading';
 import './styles.css'
 import FormatPub from '../Recursos/FormatPub';
 import { useHistory } from 'react-router-dom';
+import Publicidad from '../Recursos/Publicidad';
 
 export default () => {
     let history = useHistory()
@@ -28,29 +30,30 @@ export default () => {
         setPge(pge + 1)
     }
     return (
-        <div>
-            {<InfiniteScroll
-                dataLength={items.length}
-                next={moreData}
-                hasMore={hasMore}
-                loader={<Loading />}
-                endMessage={
-                    <p >
-                        <b>Yay! You have seen it all</b>
-                    </p>
-                }
-            >
+        <div className='container-fluid'>
+            <Row>
+                <Col md='10'>
+                    {<InfiniteScroll
+                        dataLength={items.length}
+                        next={moreData}
+                        hasMore={hasMore}
+                        loader={<Loading />}
 
-                {items.map(val => (
-                    <FormatPub key={val.idPublicaciones} publi={val}></FormatPub>
-                ))}
-            </InfiniteScroll>}
+                    >
+
+                        {items.map(val => (
+                            <FormatPub key={val.idPublicaciones} publi={val}></FormatPub>
+                        ))}
+                    </InfiniteScroll>}
+                </Col>
+                <Col>
+                    <div className='sticky-top'>
+                        <div className='mt-3'>
+                            <Publicidad orientation='z'></Publicidad>
+                        </div>
+                    </div>
+                </Col>
+            </Row>
         </div >
     )
 }
-
-/**
- * <div id='publicacion' key={val.idPublicaciones}>
-                        {val.descripcion}
-                    </div>
- */

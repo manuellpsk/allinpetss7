@@ -38,21 +38,35 @@ export const Denuncias = () => {
                 <>
                     {denuncias.map(val => (
                         <div id='formato' className='mx-auto my-3' key={val.iddenuncias}>
+                            <h1 class="display-4 text-danger pb-3 text-center">Sitio sólo para Administradores</h1>
                             <Card border='primary'>
-                                <Card.Header>{val.fecha}</Card.Header>
-                                <Card.Body as={Button} variant='light' className='text-left'>
-                                    {val.descripcion}
-                                    <Link to={{
-                                        pathname: '/home/publicacion/' + val.idPublicaciones
-                                    }}>Ver publicacion</Link>
+
+                                <Card.Header className='d-flex'>
+                                    <Card.Title className='w-50 d-inline-block'>
+                                        &#8470;{` ${val.iddenuncias} Denunciante: ${val.denunciante} - Denunciado: ${val.denunciado}`}
+                                    </Card.Title>
+                                    <Card.Subtitle className='w-50 d-inline-block text-right'>
+                                        Fecha de Denuncia: {new Date(val.fecha).toLocaleDateString()}
+                                    </Card.Subtitle>
+
+                                </Card.Header>
+                                <Card.Body variant='light'>
+                                    <p >
+                                        {val.descripcion}
+                                    </p>
+                                    <span className='pull-right'>
+                                        <Link to={{
+                                            pathname: '/home/publicacion/' + val.idPublicaciones
+                                        }} style={{ color: 'black' }} >Ver publicación</Link>
+                                    </span>
                                 </Card.Body>
                                 <Card.Footer >
                                     <Button variant='warning' onClick={e => {
                                         banear(val.iddenuncias, false)
-                                    }}>Archivar</Button>
+                                    }} className='pull-right'>Archivar</Button>
                                     <Button variant='danger' onClick={e => {
                                         banear(val.iddenuncias, true)
-                                    }}>Sancionar</Button>
+                                    }} className='pull-right mr-2'>Sancionar</Button>
                                 </Card.Footer>
                             </Card>
                         </div>
@@ -62,7 +76,8 @@ export const Denuncias = () => {
         } else {
             return (
                 <>
-                    No hay denunicas
+                    <h1 class="display-4 text-danger pb-3 text-center">Sitio sólo para Administradores</h1>
+                    <h1 class="display-5 text-danger pb-3 text-center">Aún no hay denuncias</h1>
                 </>
             )
         }

@@ -76,63 +76,61 @@ export default () => {
     }, [isLogged]);
 
     return (
-        <Container fluid style={{ margin: '.7% 0' }}>
-            <Row className='align-items-center'>
-                <Col xs='12' lg={'8' && { order: 'first' }} className='mx-auto'>
-                    <Publicidad orientation='y'></Publicidad>
+        <Row className='align-items-center mw-100'>
+            <Col md='8' className='mx-auto mw-100'>
+                    <Publicidad orientation='x'></Publicidad>
                     <p className='lead mt-5 text-justify'>Un agradecimiento especial para todos nuestros colaboradores que hicieron posible la realización de esta proyecto.</p>
-                </Col>
-                <Col xs={'12' && { order: 'first' }} lg='4'>
-                    <Card border="primary" className='mx-auto' style={{ width: '22rem' }}>
-                        <Card.Header className='font-weight-bold'>Crear Nueva Cuenta</Card.Header>
-                        <Form noValidate validated={validated} onSubmit={handleRegister}>
-                            <Card.Body>
-                                <Form.Group>
-                                    <Form.Label>Rut</Form.Label>
-                                    <Form.Control type="text" placeholder="Ingrese Rut, ejemplo: 123456789-0" onChange={validateRut} value={rut} required pattern="[0-9]{6,8}[-|‐]{1}[0-9kK]{1}" maxLength="10" />
-                                    <Form.Control.Feedback type="invalid">
-                                        El formato de rut es incorrecto.
+            </Col>
+            <Col md='4' className='mw-100 mt-2'>
+                <Card border="primary" className='mx-auto' style={{ width: '22rem' }}>
+                    <Card.Header className='font-weight-bold'>Crear Nueva Cuenta</Card.Header>
+                    <Form noValidate validated={validated} onSubmit={handleRegister}>
+                        <Card.Body>
+                            <Form.Group>
+                                <Form.Label>Rut</Form.Label>
+                                <Form.Control type="text" placeholder="Ingrese Rut, ejemplo: 123456789-0" onChange={validateRut} value={rut} required pattern="[0-9]{6,8}[-|‐]{1}[0-9kK]{1}" maxLength="10" />
+                                <Form.Control.Feedback type="invalid">
+                                    El formato de rut es incorrecto.
                                     </Form.Control.Feedback>
-                                </Form.Group>
+                            </Form.Group>
 
-                                <Form.Group>
-                                    <Form.Label>Nombre</Form.Label>
-                                    <Form.Control type="text" placeholder="Ingrese Nombre" onChange={e => setNombre(e.target.value)} value={nombre} required minLength='2' maxLength='30' />
-                                    <Form.Control.Feedback type="invalid">
-                                        El nombre debe tener mínimo 2 caracteres.
+                            <Form.Group>
+                                <Form.Label>Nombre</Form.Label>
+                                <Form.Control type="text" placeholder="Ingrese Nombre" onChange={e => setNombre(e.target.value)} value={nombre} required minLength='2' maxLength='30' />
+                                <Form.Control.Feedback type="invalid">
+                                    El nombre debe tener mínimo 2 caracteres.
                                     </Form.Control.Feedback>
-                                </Form.Group>
+                            </Form.Group>
 
-                                <Form.Group>
-                                    <Form.Label>Email</Form.Label>
-                                    <Form.Control type="email" placeholder="Ingrese email" onChange={e => setEmail(e.target.value)} value={email} required minLength='6' maxLength='30' />
-                                    <Form.Control.Feedback type="invalid">
-                                        Email incorrecto.
+                            <Form.Group>
+                                <Form.Label>Email</Form.Label>
+                                <Form.Control type="email" placeholder="Ingrese email" onChange={e => setEmail(e.target.value)} value={email} required minLength='6' maxLength='30' />
+                                <Form.Control.Feedback type="invalid">
+                                    Email incorrecto.
                                     </Form.Control.Feedback>
-                                </Form.Group>
+                            </Form.Group>
 
-                                <Form.Group>
-                                    <Form.Label>Contraseña</Form.Label>
-                                    <Form.Control type="password" placeholder="Ingrese Contraseña" onChange={e => setPassword(e.target.value)} value={password} required minLength='5' maxLength='30' />
-                                    <Form.Control.Feedback type="invalid">
-                                        La contraseña debe tener mínimo 5 caracteres.
+                            <Form.Group>
+                                <Form.Label>Contraseña</Form.Label>
+                                <Form.Control type="password" placeholder="Ingrese Contraseña" onChange={e => setPassword(e.target.value)} value={password} required minLength='5' maxLength='30' />
+                                <Form.Control.Feedback type="invalid">
+                                    La contraseña debe tener mínimo 5 caracteres.
                                     </Form.Control.Feedback>
-                                </Form.Group>
+                            </Form.Group>
 
-                                <p className="d-inline">
-                                    <small>Al hacer clic en Registrarse, acepta nuestros
+                            <p className="d-inline">
+                                <small>Al hacer clic en Registrarse, acepta nuestros
                                 <a href="asd"> Términos</a> ,<a href="asd"> Política de datos</a>y<a href="asd"> Política de cookies</a>.</small>
-                                </p>
-                            </Card.Body>
-                            <Card.Footer>
-                                <Button variant="primary" type="submit">Registrarse</Button>
-                                <ToastContainer limit={1}></ToastContainer>
-                            </Card.Footer>
-                        </Form>
-                    </Card>
-                </Col>
-            </Row>
-        </Container>
+                            </p>
+                        </Card.Body>
+                        <Card.Footer>
+                            <Button variant="primary" type="submit">Registrarse</Button>
+                            <ToastContainer limit={1}></ToastContainer>
+                        </Card.Footer>
+                    </Form>
+                </Card>
+            </Col>
 
+        </Row>
     );
 }
